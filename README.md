@@ -19,7 +19,7 @@ executarmos binários, ou seja, códigos executáveis das bibliotecas que instal
 npx tsc --init
 ```
 
-- **Convertendo arquivo TypeScript para JavaScript
+- **Convertendo arquivo TypeScript para JavaScript**
 ```shell
 npx tsc path/arquivo.ts
 ```
@@ -42,6 +42,11 @@ npx tsx path/arquivo.ts
 - **Instalando o TSX**
 ```shell
 npm i tsx -D
+```
+
+- **Instalando o eslint**: A Rocketseat tem um pacote pronto, para instalar ele junto use antes do -D o @rocketseat/eslint-config
+```shell
+npm i eslint -D
 ```
 
 # Conceitos
