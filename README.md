@@ -132,3 +132,14 @@ responsáveis por executar uma ação, sendo eles:
 ```shell
 npx knex migrate:make create_documents
 ```
+
+2. Rodar uma migrate
+```shell
+```shell
+npx knex migrate:latest
+```
+
+3. Rollback em uma migration
+```shell
+npx knex migrete:rollback
+```
