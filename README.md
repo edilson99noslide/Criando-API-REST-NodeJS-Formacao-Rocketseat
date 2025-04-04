@@ -65,3 +65,36 @@ npm i eslint -D
   "target": "es2024"
 }
 ```
+
+### Formas de comunicação com o banco de dados
+
+- **Drivers nativos**: Ferramentas e bibliotecas de baixo nível que permitem
+ que comunicamos com o Banco de dados de uma forma não abstrata, ou seja, utilizando querys crua
+- **Query builder**: Construtor de queries para facilitar as escritas da query. Configurando com o knex.js
+1. Instalando o knex
+```shell
+npm install knex --save
+```
+2. Instalando o driver
+```shell
+npm install knex mysql2
+```
+3. Configurando o banco
+```js
+import { knex } from 'knex'
+
+const knex = require('knex')({
+ client: 'mysql',
+ connection: {
+  host: '127.0.0.1',
+  port: 3306,
+  user: 'your_database_user',
+  password: 'your_database_password',
+  database: 'myapp_test',
+ },
+});
+```
+Referência: [Installation | knex.js](https://knexjs.org/guide/)
+
+- **ORMS**: Mapeamento de objeto-relacional, é a relação entre os models em forma de objeto
+

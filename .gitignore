@@ -21,3 +21,6 @@ pnpm-debug.log*
 # Cache do ESLint
 .eslintcache
 
+# Banco
+tmp/app.db
+tmp/app.db-journal
