@@ -75,10 +75,12 @@ npm i eslint -D
 ```shell
 npm install knex --save
 ```
+
 2. Instalando o driver
 ```shell
 npm install knex mysql2
 ```
+
 3. Configurando o banco
 ```js
 import { knex } from 'knex'
@@ -94,7 +96,39 @@ const knex = require('knex')({
  },
 });
 ```
+
+4. Criar o arquivo do `knexfile.ts` na raíz do projeto
+```js
+import { configDB } from "./src/database";
+
+export default configDB
+```
+
+5. Criar o script para executar corretamente o `knexfile.ts` quando o arquivo é TypeScript
+```shell
+"knex": "node --loader tsx ./node_modules/.bin/knex",
+```
+
+6. Instalando dependência para o knex com ts
+```
+npm install --save-dev ts-node
+```
+
+7. Rodando o knex
+```shell
+npx knex -h
+```
+
 Referência: [Installation | knex.js](https://knexjs.org/guide/)
 
 - **ORMS**: Mapeamento de objeto-relacional, é a relação entre os models em forma de objeto
 
+### Manipulando o DB
+
+- **Binários do knex**: O knex possui arquivos binários, ou seja, arquivos executáveis
+responsáveis por executar uma ação, sendo eles:
+
+1. Criar uma migrate de uma tabela
+```shell
+npx knex migrate:make create_documents
+```

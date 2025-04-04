@@ -22,5 +22,6 @@ pnpm-debug.log*
 .eslintcache
 
 # Banco
-tmp/app.db
-tmp/app.db-journal
+db/app.db
+db/app.db-journal
+tmp/
