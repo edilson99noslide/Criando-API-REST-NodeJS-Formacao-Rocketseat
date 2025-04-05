@@ -49,6 +49,14 @@ npm i tsx -D
 npm i eslint -D
 ```
 
+- **Extensão para ler `.env` no node**
+```shell
+npm i dotenv
+```
+```js
+import 'dotenv/config'
+```
+
 # Conceitos
 
 ### Difrença entre execução do js para o ts
@@ -143,3 +151,33 @@ npx knex migrate:latest
 ```shell
 npx knex migrete:rollback
 ```
+
+4. Buildando queries com Knex
+
+Referência: [Query Builder | knex.js](https://knexjs.org/guide/query-builder.html)
+
+### Validação de dados com zod
+
+- **Instalando o zod**
+```shell
+npm i zod
+```
+
+- **Importando do zod**
+```js
+import { z } from 'zod'
+```
+
+- **Configurando o zod na aplicação**: Crie um arquivo em `src/env/index.ts`
+```js
+import 'dotenv/config'
+import { z } from 'zod'
+
+const envSchema = z.object({
+  DATABASE_URL: z.string(),
+})
+
+const env = envSchema.parse(process.env)
+```
+
+Referência: [Installation | zod](https://zod.dev/?id=installation)
