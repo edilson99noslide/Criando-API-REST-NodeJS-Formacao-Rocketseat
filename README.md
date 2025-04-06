@@ -219,6 +219,40 @@ export async function transactionsRoutes(app: FastifyInstance) {
 }
 ```
 
+- **Hook global para rotas**: O fastify recomenda criar os arquivos dentro de `src/pre-handlers/arquivo-handler.ts`, mas podemos também usar
+por questão de preferência criar em `src/middlewares/arquivo-handle.ts`, essas funções podem
+ser usadas antes da execução do handler que é a função da rota
+
+`src/middlewares/check-session-id-exists.ts`
+```js
+import {FastifyReply, FastifyRequest} from "fastify";
+
+export async function checkSessionIdExists(request: FastifyRequest, reply: FastifyReply) {
+  const sessionId = request.cookies.sessionId
+
+  if(!sessionId) {
+    return reply.status(401).send({ 'error': 'Unauthorized!' })
+  }
+}
+```
+
+`src/routes/transactions.ts`
+```js
+app.get('/',
+        {
+         preHandler: [ checkSessionIdExists ] // aqui fica o preHandler, chame as funções dentro do array
+        },
+        async (request, reply) => {
+          const { sessionId } = request.cookies
+ 
+          const transactions = await knex('transactions')
+                  .where('id', sessionId)
+                  .select()
+ 
+          return { transactions }
+        })
+```
+
 ### Lidando com Cookies no Fastify
 
 - **O que é?**: É uma forma de manter contexto em requisições, é utilizado principalmente
