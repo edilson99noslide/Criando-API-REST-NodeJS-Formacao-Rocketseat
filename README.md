@@ -218,3 +218,46 @@ export async function transactionsRoutes(app: FastifyInstance) {
   })
 }
 ```
+
+### Lidando com Cookies no Fastify
+
+- **O que é?**: É uma forma de manter contexto em requisições, é utilizado principalmente
+por redes sociais, você não precisa estar logado para a rede social saber quem é você no
+contexto das requisições.
+```shell
+npm i @fastify/cookie
+```
+
+- **Ordem**: É necessário cadastrar o módulo de cookie antes das rotas que vão usar ele, veja o exemplo em `src/server.ts`
+```js
+import fastify from 'fastify'
+import { env } from './env'
+import { transactionsRoutes } from "./routes/transactions";
+import cookie from "@fastify/cookie" // Importanto do cookie do fastify
+
+const app = fastify()
+
+app.register(cookie) // Cadastrando o uso de cookie antes da rota
+
+app.register(transactionsRoutes, {
+  prefix: 'transactions',
+})
+
+app
+  .listen({
+    port: env.PORT,
+  })
+  .then(() => {
+    console.log('HTTP server running.')
+  })
+
+```
+
+- **Definições de cookies**: Primeiro parâmetro é o `nome`, segundo ser `valor` e terceiro é um `objeto`
+indicando `path` em qual rotas vão poder acessar ele, `'/'` indica todas, `maxAge` o tempo de expiração em segundos.
+```js
+reply.cookie('sessionId', sessionId, {
+    path: '/',
+    maxAge: 60 * 60 * 24 * 7, // 7 dias em segundos
+  })
+```

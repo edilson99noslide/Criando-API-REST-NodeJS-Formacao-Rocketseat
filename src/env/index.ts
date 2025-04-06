@@ -9,7 +9,7 @@ const envSchema = z.object({
 
 const envValidator = envSchema.safeParse(process.env)
 
-if(!envValidator.success) {
+if (!envValidator.success) {
   console.error('Invalid environment variable(s)!', envValidator.error.format())
 
   throw new Error('Invalid environment variable(s).')
