@@ -181,3 +181,21 @@ const env = envSchema.parse(process.env)
 ```
 
 Referência: [Installation | zod](https://zod.dev/?id=installation)
+
+### Criando rotas
+
+- **Pluggin do fastify**: os arquivos referentes às rotas ficam em `src/routes/arquivoDeRota.ts` e as
+funções precisam obrigatóriamente serem async, também precisa ter no parâmetro a instância do fastify
+
+```js
+import { FastifyInstance } from 'fastify'
+import { knex } from "../database";
+
+export async function transactionsRoutes(app: FastifyInstance) {
+  app.get('/', async () => {
+    const transactions = await knex('transactions').select('*')
+
+    return transactions
+  })
+}
+```
