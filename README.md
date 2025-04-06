@@ -143,7 +143,6 @@ npx knex migrate:make create_documents
 
 2. Rodar uma migrate
 ```shell
-```shell
 npx knex migrate:latest
 ```
 
@@ -155,6 +154,26 @@ npx knex migrete:rollback
 4. Buildando queries com Knex
 
 Referência: [Query Builder | knex.js](https://knexjs.org/guide/query-builder.html)
+
+5. Tipagem do knex: Crie um arquivo geralmente fica em `src/types/knex.d.ts` a extensão d.ts indica que
+é um arquivo que não possui código JavaScript, somente TypeScript, o arquivo com a interface
+das tipagens de tabelas do knex fica em `node_modules/knex/types/tables.d.ts`
+```ts
+// eslint-disable-nex-line
+import { Knex } from 'knex';
+
+declare module 'knex/types/tables' {
+  export interface Tables {
+    transactions: {
+      id: string;
+      title: string;
+      amount: number;
+      createdAt: string;
+      session_id?: string;
+    }
+  }
+}
+```
 
 ### Validação de dados com zod
 
