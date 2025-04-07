@@ -5,11 +5,12 @@ import { randomUUID } from 'node:crypto'
 import { checkSessionIdExists } from '../middlewares/check-session-id-exists'
 
 export async function transactionsRoutes(app: FastifyInstance) {
-  app.get('/',
+  app.get(
+    '/',
     {
-      preHandler: [ checkSessionIdExists ]
+      preHandler: [checkSessionIdExists],
     },
-    async (request, reply) => {
+    async (request) => {
       const { sessionId } = request.cookies
 
       const transactions = await knex('transactions')
@@ -17,11 +18,13 @@ export async function transactionsRoutes(app: FastifyInstance) {
         .select()
 
       return { transactions }
-    })
+    },
+  )
 
-  app.get('/:id',
+  app.get(
+    '/:id',
     {
-      preHandler: [ checkSessionIdExists ]
+      preHandler: [checkSessionIdExists],
     },
     async (request) => {
       const getTransactionParamsSchema = z.object({
@@ -31,17 +34,21 @@ export async function transactionsRoutes(app: FastifyInstance) {
       const { id } = getTransactionParamsSchema.parse(request.params)
       const { sessionId } = request.cookies
 
-      const transaction = await knex('transactions').where({
-        id,
-        session_id: sessionId,
-      }).first()
+      const transaction = await knex('transactions')
+        .where({
+          id,
+          session_id: sessionId,
+        })
+        .first()
 
       return { transaction }
-    })
+    },
+  )
 
-  app.get('/summary',
+  app.get(
+    '/summary',
     {
-      preHandler: [ checkSessionIdExists ]
+      preHandler: [checkSessionIdExists],
     },
     async (request) => {
       const { sessionId } = request.cookies
@@ -52,11 +59,13 @@ export async function transactionsRoutes(app: FastifyInstance) {
         .first()
 
       return { summary }
-    })
+    },
+  )
 
-  app.post('/',
+  app.post(
+    '/',
     {
-      preHandler: [ checkSessionIdExists ]
+      preHandler: [checkSessionIdExists],
     },
     async (request, reply) => {
       const createTransactionBodySchema = z.object({
@@ -88,5 +97,6 @@ export async function transactionsRoutes(app: FastifyInstance) {
       })
 
       return reply.status(201).send()
-    })
+    },
+  )
 }

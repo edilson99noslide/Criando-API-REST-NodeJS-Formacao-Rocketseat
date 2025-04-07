@@ -219,7 +219,7 @@ export async function transactionsRoutes(app: FastifyInstance) {
 }
 ```
 
-- **Hook global para rotas**: O fastify recomenda criar os arquivos dentro de `src/pre-handlers/arquivo-handler.ts`, mas podemos também usar
+- **Hook para rotas específicas**: O fastify recomenda criar os arquivos dentro de `src/pre-handlers/arquivo-handler.ts`, mas podemos também usar
 por questão de preferência criar em `src/middlewares/arquivo-handle.ts`, essas funções podem
 ser usadas antes da execução do handler que é a função da rota
 
@@ -236,7 +236,7 @@ export async function checkSessionIdExists(request: FastifyRequest, reply: Fasti
 }
 ```
 
-`src/routes/transactions.ts`
+`src/routes/transactions.ts` - Por rota específica
 ```js
 app.get('/',
         {
@@ -251,6 +251,45 @@ app.get('/',
  
           return { transactions }
         })
+```
+
+- **Hook para grupo de rotas**: Para definir um hook para um grupo de rotas específica
+`src/routes/transactions.ts` use o método `addHook`, no primeiro parâmetro especifique `'preHandler'` e no segundo a `função`
+```js
+app.addHook('preHandler', async (request, reply) => {
+  console.log(`[${request.method}] ${request.url}]`)
+})
+```
+
+- **Hook global para rotas**: Para definir um hook global para todas as rotas, ele deve ser chamado
+antes da criação das rotas, ou seja, antes do pluggin de cada rota em `src/server.ts`
+```js
+import fastify from 'fastify'
+import { env } from './env'
+import { transactionsRoutes } from './routes/transactions'
+import cookie from '@fastify/cookie'
+
+const app = fastify()
+
+app.register(cookie)
+
+// Criando o hook aqui
+app.addHook('preHandler', async (request, reply) => {
+ console.log(`[${request.method}] ${request.url}]`)
+})
+
+app.register(transactionsRoutes, {
+ prefix: 'transactions',
+})
+
+app
+  .listen({
+   port: env.PORT,
+  })
+  .then(() => {
+   console.log('HTTP server running.')
+  })
+
 ```
 
 ### Lidando com Cookies no Fastify
@@ -295,3 +334,18 @@ reply.cookie('sessionId', sessionId, {
     maxAge: 60 * 60 * 24 * 7, // 7 dias em segundos
   })
 ```
+
+### Testes
+
+- **Testes Unitários**: Como o próprio nome já diz, eles testam exclusivamente uma unidade da aplicação,
+por exemplo, uma função de conversão de data, você vai executar a função e passar na data no
+parâmetro e será testado exclusivamente isso, não será testado onde ela foi chamada. Geralmente são os testes mais usados
+
+
+- **Testes de Integração**: São testes de comunicação entre duas ou mais unidades, por exemplo, será testado
+uma função que chama uma função que chama outra função
+
+
+- **Testes e2e - ponta a ponta**: São testes que simulam o usuário utilizando nossa aplicação. O usuário mencionado
+é o client, portanto ele irá fazer chamadas HTTP, websockets, no final das contas verificam se as portas de entradas
+da nossa aplicação está funcionando, desde a rota até o banco de dados
