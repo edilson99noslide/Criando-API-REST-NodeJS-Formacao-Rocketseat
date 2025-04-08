@@ -349,3 +349,71 @@ uma função que chama uma função que chama outra função
 - **Testes e2e - ponta a ponta**: São testes que simulam o usuário utilizando nossa aplicação. O usuário mencionado
 é o client, portanto ele irá fazer chamadas HTTP, websockets, no final das contas verificam se as portas de entradas
 da nossa aplicação está funcionando, desde a rota até o banco de dados
+
+
+- **Como criar um teste**: Instale o vitest e crie os arquivos de teste com a estenção `spec.ts` ou `test.ts` em `test/arquivo-de-teste.spec.ts`
+```shell
+npm i vitest -D
+```
+
+1. `test/example.spec.ts` import as funções e crie o teste usando o `test()` o primeiro
+parâmetro é a descrição do teste e no segundo é a `função` com a chamada HTTP e a `validação` usando o `expect` especificando o que
+é esperado
+```js
+import { expect, test } from 'vitest'
+
+test('O usuário consegue criar uma nova transação', () => {
+  // fazer a chamada HTTP para criar uma nova transação
+
+  const responseStatusCode = 201;
+
+  expect(responseStatusCode).toEqual(201)
+})
+```
+
+2. Comando para rodar o teste
+```shell
+npx vitest
+```
+
+Referência: [Vitest | Get Started](https://vitest.dev/)
+
+- **Utilizando o supertest**
+
+1. Versão JavaScript
+```shell
+npm i supertest -D
+```
+
+2. Versão TypeScript
+```shell
+npm i -D @types/supertest
+```
+
+3. Como criar um teste
+```ts
+import { test, beforeAll, afterAll } from 'vitest'
+import supertest from 'supertest'
+import { app } from '../src/app'
+
+// espera o app estar pronto para rodar os testes
+beforeAll(async () => {
+ await app.ready()
+})
+
+// fecha o app após os testes serem finalizados
+afterAll(async () => {
+ await app.close()
+})
+
+test('O usuário consegue criar uma nova transação', async () => {
+ await supertest(app.server)
+   .post('/transactions')
+   .send({
+    title: 'Nova request',
+    amount: 1000,
+    type: 'credit'
+   })
+   .expect(201)
+})
+```
