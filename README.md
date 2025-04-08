@@ -417,3 +417,22 @@ test('O usuário consegue criar uma nova transação', async () => {
    .expect(201)
 })
 ```
+
+- **Categorizando testes**
+```ts
+import { test, describe } from 'vitest'
+
+describe('Transactions routes', () => {
+  // Conteúdo aqui
+})
+```
+
+- **Uso convencional de it**: Ao invés de usar o test, podemos também usar o it, esse é o método convencional
+porque ele faz parte da descrição
+```ts
+import { id } from 'vitest'
+
+it('should be possible to create a transaction', async () => {
+  // Conteúdo aqui
+})
+```
