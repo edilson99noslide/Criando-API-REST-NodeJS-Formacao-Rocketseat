@@ -446,3 +446,24 @@ import {execSync} from 'child_process'
 
 execSync('npx knex migrate:latest')
 ```
+
+### Deploy de aplicações Node
+
+- **tsup**
+```shell
+npm i tsup -D
+```
+
+1. Crie o script para buildar o projeto em `package.json`
+```json
+{
+  "scripts": {
+  "build": "tsup src",
+  }
+}
+```
+
+2. Comando para buildar o projeto
+```shell
+npm run build
+```

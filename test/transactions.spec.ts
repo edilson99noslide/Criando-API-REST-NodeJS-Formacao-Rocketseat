@@ -18,7 +18,7 @@ describe('Transactions routes', () => {
   })
 
   // Deve ser possível criar uma transação
-  it('must be possible to create a transaction', async () => {
+  it('should be possible to create a transaction', async () => {
     await supertest(app.server)
       .post('/transactions')
       .send({

@@ -4,6 +4,7 @@ package-lock.json
 
 # Saída da compilação TypeScript
 dist/
+build/
 *.tsbuildinfo
 
 # Arquivos de configuração do editor
