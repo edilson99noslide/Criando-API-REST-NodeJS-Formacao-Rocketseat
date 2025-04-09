@@ -12,6 +12,7 @@ dist/
 
 # Arquivos de ambiente (se estiver usando)
 .env
+.env.test
 
 # Logs e debug
 npm-debug.log*
@@ -23,5 +24,8 @@ pnpm-debug.log*
 
 # Banco
 db/app.db
+db/test.db
 db/app.db-journal
+
+# Arquivos temporários
 tmp/

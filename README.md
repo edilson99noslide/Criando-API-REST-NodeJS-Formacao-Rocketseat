@@ -436,3 +436,13 @@ it('should be possible to create a transaction', async () => {
   // Conteúdo aqui
 })
 ```
+
+### Executando scripts de terminal dentro do Node
+
+- **execSync**
+
+```ts
+import {execSync} from 'child_process'
+
+execSync('npx knex migrate:latest')
+```
