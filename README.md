@@ -467,3 +467,5 @@ npm i tsup -D
 ```shell
 npm run build
 ```
+
+Referência: [tsup | install](https://tsup.egoist.dev/)
