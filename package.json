@@ -10,7 +10,8 @@
     "knex": "node --loader tsx ./node_modules/.bin/knex",
     "lint": "npx eslint src --ext .ts --fix --cache",
     "build": "tsup src --out-dir build",
-    "test": "vitest"
+    "test": "vitest",
+    "migrate": "tsx ./node_modules/knex/bin/cli.js migrate:latest"
   },
   "keywords": [],
   "author": "",
